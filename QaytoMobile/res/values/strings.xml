@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Qayto</string>
+    <string name="probSolved">Were we able to solve your problem?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ratings">Please take a moment to rate your Qayto expert</string>
+    <string name="submit">Submit</string>
+    <string name="result">You rated:</string>
+    <string name="enterTextLabel">Type a description of your problem here:</string> 
+    <string name="connect">Connect</string> 
+    <string name="returnToSubcategories">Return to sub categories</string> 
+    <string name="placeInLine">Your place in line:</string> 
+    <string name="ratingScreen">Rating Screen</string> 
+</resources>
