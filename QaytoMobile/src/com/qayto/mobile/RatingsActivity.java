@@ -67,9 +67,7 @@ public class RatingsActivity extends Activity {
 				Toast.makeText(RatingsActivity.this,String.valueOf(ratingBar.getRating()),Toast.LENGTH_SHORT).show();
 	 
 			}
-	 
 		});
-	 
 	  }
 }
 

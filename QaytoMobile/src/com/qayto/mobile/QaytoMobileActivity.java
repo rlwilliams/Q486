@@ -1,7 +1,6 @@
 package com.qayto.mobile;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,11 +8,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 
-/*
- * Hi, Travis
- */
-
 public class QaytoMobileActivity extends Activity {
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,9 +24,15 @@ public class QaytoMobileActivity extends Activity {
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            	
+            	/*
                 Intent intent = new Intent();
                 intent.setClass(QaytoMobileActivity.this, SubcatListActivity.class);
                 startActivity(intent);
+                */
+            	ServerRequestHelper srq =  new ServerRequestHelper();
+            	String result = srq.getSubcategories("1");
+            	System.out.println(result);
             }
         });
     }

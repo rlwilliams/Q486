@@ -1,80 +1,63 @@
 package com.qayto.mobile;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import android.util.Log;
 
-//It may be a good idea to implement these things as AsyncTasks
 
 public class ServerRequestHelper {
-	private final String location = "http://...";
 	
-	private ArrayList<NameValuePair> nameValuePairs;
-	private HttpClient client;
-	private HttpPost post;
-	private HttpResponse response;
-	private HttpEntity entity;
-	private InputStream in;
-	private BufferedReader reader;
-	private StringBuilder stringBuilder;
+	private final String serverLocation = "http://capstone.robertwinkler.com/";
+	public ServerRequestHelper() {}
 	
-	public ServerRequestHelper() {
-		nameValuePairs = new ArrayList<NameValuePair>();
-		client = new  DefaultHttpClient();
-		stringBuilder = new StringBuilder();
-	}
-	
-	public JSONArray getSubcategories(String category) {
-		String result = "";
+	public String getSubcategories(String category) {
+
+		URL url = null;
+		HttpURLConnection connection = null;
+		OutputStreamWriter request = null;
+		InputStreamReader isr = null;
+		BufferedReader br = null;
+		StringBuilder sb = null;
 		String line = null;
-		JSONArray jResult = null;
+		String response = null;
 		
 		//Get data from the server
 		try {
-			this.post = new HttpPost(location);
-			this.nameValuePairs.clear();
-			this.nameValuePairs.add(new BasicNameValuePair("category", category));
-			this.post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			this.response = client.execute(post);
-			this.entity = response.getEntity();
-			this.in = entity.getContent();
+			url = new URL(serverLocation + "sub_categories.php");
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestMethod("POST");
+			
+			request = new OutputStreamWriter(connection.getOutputStream());
+			request.write("cat_id=" + category);
+			request.flush();
+			request.close();
+			
+			isr = new InputStreamReader(connection.getInputStream());
+			br = new BufferedReader(isr);
+			sb = new StringBuilder();
+			
+			line = "";
+			while ((line = br.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			
+			response = sb.toString();
+			isr.close();
+			br.close();
 		} catch(Exception e) {
 			Log.e("Problem connecting to HTTP server...", e.getMessage());
+			e.printStackTrace();
 		}
 		
-		//Convert the HTTP response to a string
-		try {
-			reader = new BufferedReader(new InputStreamReader(in, "iso-8859-1"), 8);
-			while ((line = reader.readLine()) != null) {
-				stringBuilder.append(line + "\n");
-			}
-			in.close();
-			result = stringBuilder.toString();
-		} catch (Exception e) {
-			Log.e("log_tag", "Error converting result " +e.toString());
-		}
-		
-		//Parse JSON data
-		try {
-			jResult = new JSONArray(result);
-		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing JSON data " + e.toString());
-		}
-		
-		return jResult;
+		return response;
 	}
 }
+
+
+//http://stackoverflow.com/questions/4470936/how-to-do-a-http-post-in-android
