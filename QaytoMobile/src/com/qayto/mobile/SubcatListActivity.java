@@ -23,7 +23,7 @@ public class SubcatListActivity extends ListActivity {
 		Bundle extras = getIntent().getExtras();
 		String subcategories = "";
 		if (extras != null) {
-			subcategories = extras.getString("subcateories");
+			subcategories = extras.getString("subcategories");
 		}
 		
 		ArrayList<String> data = new ArrayList<String>();
