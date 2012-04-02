@@ -19,17 +19,17 @@ public class SubcatListActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		ServerRequestHelper srq = new ServerRequestHelper();
 		Bundle extras = getIntent().getExtras();
-		String subcategories = "";
+		int subcatIndex = 0;
 		if (extras != null) {
-			subcategories = extras.getString("subcategories");
+			subcatIndex = extras.getInt("subcatIndex");
 		}
+		JSONArray jdata = srq.getSubcategories("" + subcatIndex);
 		
 		ArrayList<String> data = new ArrayList<String>();
 		
 		try {
-			JSONArray jdata = new JSONArray(subcategories);
 			for (int i = 0; i<jdata.length(); i++) {
 				data.add(jdata.getString(i));
 			}

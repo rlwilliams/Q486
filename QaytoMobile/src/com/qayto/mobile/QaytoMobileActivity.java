@@ -27,10 +27,8 @@ public class QaytoMobileActivity extends Activity {
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            	ServerRequestHelper srq =  new ServerRequestHelper();
-            	JSONArray data = srq.getSubcategories("" + (position + 1));
                 Intent intent = new Intent();
-                intent.putExtra("subcategories", data.toString());
+                intent.putExtra("subcatIndex", (position + 1));
                 intent.setClass(QaytoMobileActivity.this, SubcatListActivity.class);
                 startActivity(intent);
             }
