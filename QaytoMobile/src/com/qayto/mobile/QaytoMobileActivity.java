@@ -1,6 +1,9 @@
 package com.qayto.mobile;
 
+import org.json.JSONArray;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,15 +27,12 @@ public class QaytoMobileActivity extends Activity {
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            	
-            	/*
+            	ServerRequestHelper srq =  new ServerRequestHelper();
+            	JSONArray data = srq.getSubcategories("" + (position + 1));
                 Intent intent = new Intent();
+                intent.putExtra("subcategories", data.toString());
                 intent.setClass(QaytoMobileActivity.this, SubcatListActivity.class);
                 startActivity(intent);
-                */
-            	ServerRequestHelper srq =  new ServerRequestHelper();
-            	String result = srq.getSubcategories("1");
-            	System.out.println(result);
             }
         });
     }

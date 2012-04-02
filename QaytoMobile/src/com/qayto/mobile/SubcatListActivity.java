@@ -19,30 +19,27 @@ public class SubcatListActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		JSONArray sample = new JSONArray();
-		sample.put("Subcategory 1");
-		sample.put("Subcategory 2");
-		sample.put("Subcategory 3");
-		sample.put("Subcategory 4");
-		sample.put("Subcategory 5");
-		sample.put("Subcategory 6");
 		
-		ArrayList<String> sampleData = new ArrayList<String>();
-		
-		try {
-			
-			for (int i = 0; i<sample.length(); i++) {
-				sampleData.add(sample.getString(i));
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Log.e("log_tag", e.toString());
+		Bundle extras = getIntent().getExtras();
+		String subcategories = "";
+		if (extras != null) {
+			subcategories = extras.getString("subcateories");
 		}
 		
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, sampleData));
+		ArrayList<String> data = new ArrayList<String>();
+		
+		try {
+			JSONArray jdata = new JSONArray(subcategories);
+			for (int i = 0; i<jdata.length(); i++) {
+				data.add(jdata.getString(i));
+			}
+		} catch (JSONException e) {
+			Log.e("JSON error...", e.getMessage());
+		}
+		
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, data));
 		ListView lv = this.getListView();
 		lv.setTextFilterEnabled(true);
-		
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
