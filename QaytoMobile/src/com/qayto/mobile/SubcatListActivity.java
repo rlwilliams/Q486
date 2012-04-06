@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.ListActivity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,9 +42,12 @@ public class SubcatListActivity extends ListActivity {
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, data));
 		ListView lv = this.getListView();
 		lv.setTextFilterEnabled(true);
+		lv.setBackgroundColor(Color.BLACK);
 		lv.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent();
+				intent.setClass(SubcatListActivity.this, WaitingActivity.class);
+                startActivity(intent);
 				
 			}
 		});
