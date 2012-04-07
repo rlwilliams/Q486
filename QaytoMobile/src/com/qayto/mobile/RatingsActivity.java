@@ -2,6 +2,7 @@ package com.qayto.mobile;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,9 +64,10 @@ public class RatingsActivity extends Activity {
 		{
 	 
 			public void onClick(View v) {
-	 
 				Toast.makeText(RatingsActivity.this,String.valueOf(ratingBar.getRating()),Toast.LENGTH_SHORT).show();
-	 
+				Intent intent = new Intent();
+				intent.setClass(RatingsActivity.this, QaytoMobileActivity.class);
+                startActivity(intent);
 			}
 		});
 	  }
