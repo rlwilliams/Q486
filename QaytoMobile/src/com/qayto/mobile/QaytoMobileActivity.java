@@ -1,7 +1,5 @@
 package com.qayto.mobile;
 
-import org.json.JSONArray;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
