@@ -20,7 +20,7 @@ public class WaitingActivity extends Activity {
             connect.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                 	Intent intent = new Intent();
-    				intent.setClass(WaitingActivity.this, RatingsActivity.class);
+    				intent.setClass(WaitingActivity.this, MediaPlayer_Video.class);
                     startActivity(intent);
                 }
             });
