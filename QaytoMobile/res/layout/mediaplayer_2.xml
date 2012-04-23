@@ -6,9 +6,8 @@
 
     <SurfaceView
         android:id="@+id/surface1"
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center">
 
     </SurfaceView>
@@ -16,16 +15,14 @@
     
     <SurfaceView
         android:id="@+id/surface2"
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center">
     </SurfaceView>
 
-
     <Button
         android:id="@+id/button1"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="End Session" />
 
