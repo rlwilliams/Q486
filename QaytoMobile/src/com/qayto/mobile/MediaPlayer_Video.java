@@ -18,8 +18,8 @@ package com.qayto.mobile;
 
 
 import java.io.IOException;
-
-//import com.example.android.apis.graphics.Preview;
+import java.lang.reflect.Method;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,9 +36,9 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -322,18 +322,32 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
         mCamera.release();
         mCamera = null;
     }
+    
+    protected void setDisplayOrientation(Camera camera, int angle){
+        Method downPolymorphic;
+        try
+        {
+            downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", new Class[] { int.class });
+            if (downPolymorphic != null)
+                downPolymorphic.invoke(camera, new Object[] { angle });
+        }
+        catch (Exception e1)
+        {
+        }
+    }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
         // Now that the size is known, set up the camera parameters and begin
         // the preview.
     //	if (!size_set) {
 	        Camera.Parameters parameters = mCamera.getParameters();
-	        if (h == 0)
-	        	h = 50;
-	        parameters.setPreviewSize(w, h);
+	        List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
+	        Camera.Size previewSize = previewSizes.get(1);
+	        parameters.setPreviewSize(previewSize.width, previewSize.height);
 	        Log.d("size_set", ""+w+" "+h);
 	        mCamera.stopPreview();
 	        mCamera.setParameters(parameters);
+	        setDisplayOrientation(mCamera, 90);
 	        mCamera.startPreview();
 	        size_set = true;
     	//}
