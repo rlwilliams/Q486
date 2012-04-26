@@ -100,8 +100,6 @@ public class MediaPlayer_Video extends Activity implements
     private void playVideo() {
         doCleanUp();
         try {
-
-     
                 /*
                  * TODO: Set path variable to progressive streamable mp4 or
                  * 3gpp format URL. Http protocol should be used.

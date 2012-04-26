@@ -49,6 +49,9 @@ public class SubcatListActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent();
 				intent.setClass(SubcatListActivity.this, WaitingActivity.class);
+				intent.setAction(Intent.ACTION_MAIN);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
+                        | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.putExtra("subcatIndex", subcatIndex);
                 startActivity(intent);
 			}

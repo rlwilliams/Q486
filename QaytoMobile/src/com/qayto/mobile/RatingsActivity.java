@@ -41,6 +41,7 @@ public class RatingsActivity extends Activity {
         final RadioButton No = (RadioButton) findViewById(R.id.No);
         Yes.setOnClickListener(radio_listener);
         No.setOnClickListener(radio_listener);
+        Yes.setChecked(true);
 	  }
 	    OnClickListener radio_listener = new OnClickListener() {
 	    	public void onClick(View v){

@@ -8,9 +8,9 @@
     <string name="ratings">Please take a moment to rate your Qayto expert</string>
     <string name="submit">Submit</string>
     <string name="result">You rated:</string>
-    <string name="enterTextLabel">Type a description of your problem here:</string> 
+    <string name="enterTextLabel">Give a brief explanation of your problem.</string> 
     <string name="connect">Connect</string> 
     <string name="placeInLine">Your place in line:</string> 
     <string name="ratingScreen">Rating Screen</string> 
-    <string name="numInLine">6</string> 
+    <string name="numInLine">1</string> 
 </resources>
