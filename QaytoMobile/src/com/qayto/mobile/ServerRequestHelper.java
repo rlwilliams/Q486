@@ -12,33 +12,31 @@ import org.json.JSONTokener;
 
 import android.util.Log;
 
-
 public class ServerRequestHelper {
 	
 	private final String serverLocation = "http://capstone.robertwinkler.com/";
+	private InputStreamReader isr = null;
+	private BufferedReader br = null;
+	private String line = null;
+	
 	public ServerRequestHelper() {}
 	
 	public JSONArray getSubcategories(String category) {
 
 		JSONArray result = null;
 		JSONTokener tokener = null;
-		URL url = null;
-		HttpURLConnection connection = null;
-		OutputStreamWriter request = null;
-		InputStreamReader isr = null;
-		BufferedReader br = null;
 		StringBuilder sb = null;
-		String line = null;
+		HttpURLConnection connection = null;
 		
 		//Get data from the server
 		try {
-			url = new URL(serverLocation + "sub_categories.php");
+			URL url = new URL(serverLocation + "sub_categories.php");
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			connection.setRequestMethod("POST");
 			
-			request = new OutputStreamWriter(connection.getOutputStream());
+			OutputStreamWriter request = new OutputStreamWriter(connection.getOutputStream());
 			request.write("cat_id=" + category);
 			request.flush();
 			request.close();
@@ -56,6 +54,8 @@ public class ServerRequestHelper {
 			br.close();
 		} catch(Exception e) {
 			Log.e("Problem connecting to HTTP server...", e.getMessage());
+		} finally {
+			connection.disconnect();
 		}
 		
 		//Parse response into JSONArray
@@ -68,7 +68,70 @@ public class ServerRequestHelper {
 		
 		return result;
 	}
+	
+	public void createQuestion(String question, int subcat) {
+
+		HttpURLConnection connection = null;
+		URL url = null;
+		OutputStreamWriter request = null;
+		InputStreamReader isr = null;
+		BufferedReader br = null;
+		
+		try {
+			url = new URL(serverLocation + "question_create.php");
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestMethod("POST");
+
+			request = new OutputStreamWriter(connection.getOutputStream());
+			request.write("question=" + question + "&sub_cat_id=" + subcat);
+			request.flush();
+			request.close();
+			
+			isr = new InputStreamReader(connection.getInputStream());
+			br = new BufferedReader(isr);
+			
+			isr.close();
+			br.close();
+			
+		} catch (Exception e) {
+			Log.e("Problem connecting to HTTP server...", e.getMessage());
+		} finally {
+			connection.disconnect();
+		}
+	}
+	
+	public void updateQuestion(String question, int isAnswered, int rating) {
+
+		HttpURLConnection connection = null;
+		URL url = null;
+		OutputStreamWriter request = null;
+		InputStreamReader isr = null;
+		BufferedReader br = null;
+		
+		try {
+			url = new URL(serverLocation + "question_update.php");
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestMethod("POST");
+
+			request = new OutputStreamWriter(connection.getOutputStream());
+			request.write("question=" + question + "&isAnswered=" + isAnswered + "&rating=" + rating);
+			request.flush();
+			request.close();
+			
+			isr = new InputStreamReader(connection.getInputStream());
+			br = new BufferedReader(isr);
+			
+			isr.close();
+			br.close();
+			
+		} catch (Exception e) {
+			Log.e("Problem connecting to HTTP server...", e.getMessage());
+		} finally {
+			connection.disconnect();
+		}
+	}
 }
-
-
-//http://stackoverflow.com/questions/4470936/how-to-do-a-http-post-in-android

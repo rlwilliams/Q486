@@ -24,6 +24,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -57,6 +58,7 @@ public class MediaPlayer_Video extends Activity implements
     private boolean mIsVideoSizeKnown = false;
     private boolean mIsVideoReadyToBePlayed = false;
     private Preview camera_view;
+    private String question;
 
     /**
      * 
@@ -65,6 +67,12 @@ public class MediaPlayer_Video extends Activity implements
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        question = "";
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+			question = extras.getString("question");
+		}
+        
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.mediaplayer_2);
        // camera_view = new Preview(this, (SurfaceView)findViewById(R.id.surface2));
@@ -81,13 +89,12 @@ public class MediaPlayer_Video extends Activity implements
        Button endsession = (Button) findViewById(R.id.button1);
        endsession.setOnClickListener(new OnClickListener() {
            public void onClick(View v) {
-           	Intent intent = new Intent();
+           		Intent intent = new Intent();
 				intent.setClass(MediaPlayer_Video.this, RatingsActivity.class);
-               startActivity(intent);
+				intent.putExtra("question", question);
+				startActivity(intent);
            }
        });
-       
-       
     }
 
     private void playVideo() {
@@ -340,14 +347,18 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
         // Now that the size is known, set up the camera parameters and begin
         // the preview.
     //	if (!size_set) {
+    		Configuration config = getResources().getConfiguration();
 	        Camera.Parameters parameters = mCamera.getParameters();
 	        List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
-	        Camera.Size previewSize = previewSizes.get(1);
+	        Camera.Size previewSize = previewSizes.get(2);
 	        parameters.setPreviewSize(previewSize.width, previewSize.height);
 	        Log.d("size_set", ""+w+" "+h);
 	        mCamera.stopPreview();
 	        mCamera.setParameters(parameters);
-	        setDisplayOrientation(mCamera, 90);
+	        if (config.orientation == Configuration.ORIENTATION_PORTRAIT)
+	        	setDisplayOrientation(mCamera, 90);
+	        else
+	        	setDisplayOrientation(mCamera, 180);
 	        mCamera.startPreview();
 	        size_set = true;
     	//}

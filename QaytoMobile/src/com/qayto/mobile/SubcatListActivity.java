@@ -18,12 +18,14 @@ import android.widget.ListView;
 
 public class SubcatListActivity extends ListActivity {
 
+	int subcatIndex = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ServerRequestHelper srq = new ServerRequestHelper();
 		Bundle extras = getIntent().getExtras();
-		int subcatIndex = 0;
+
 		if (extras != null) {
 			subcatIndex = extras.getInt("subcatIndex");
 		}
@@ -47,8 +49,8 @@ public class SubcatListActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent();
 				intent.setClass(SubcatListActivity.this, WaitingActivity.class);
+				intent.putExtra("subcatIndex", subcatIndex);
                 startActivity(intent);
-				
 			}
 		});
 	}

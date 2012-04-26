@@ -10,6 +10,7 @@
         android:text="@string/probSolved" 
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <RadioGroup
+        android:id="@+id/ratingGroup"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         android:orientation="vertical">
